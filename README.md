@@ -6,7 +6,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue.svg)](https://www.typescriptlang.org/)
 [![Database](https://img.shields.io/badge/Firebase-Firestore-amber.svg)](https://firebase.google.com/)
 
-> **Empowering Sustainable Bangladesh** with eco-verified artisan products, 64-district geo-discovery, multi-vendor cart checkout, official itemized tax receipts, transactional notifications, and live courier parcel tracking.
+
 
 ---
 
