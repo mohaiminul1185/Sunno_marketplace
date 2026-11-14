@@ -1,0 +1,98 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isStaffAdmin() {
+      return isAuthenticated() && (request.auth.token.email_verified == true || request.auth.token.firebase.sign_in_provider == 'google.com') && (
+        request.auth.token.email == 'himel1176cse.uits@gmail.com' ||
+        request.auth.token.email == 'admin@sunno.eco' ||
+        request.auth.token.email == 'mohaiminul1185@gmail.com' ||
+        request.auth.token.email == 'mdshantogazi2005@gmail.com'
+      );
+    }
+    
+    function isImage() {
+      return request.resource.contentType.matches('image/.*');
+    }
+    
+    function isReasonableSize() {
+      return request.resource.size < 10 * 1024 * 1024; // 10MB max
+    }
+
+    function isVideo() {
+      return request.resource.contentType.matches('video/.*');
+    }
+
+    function isReasonableVideoSize() {
+      return request.resource.size <= 50 * 1024 * 1024; // 50MB max
+    }
+
+    // Default deny
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+
+    // User avatars / Profile photos
+    match /users/{userId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if isOwner(userId) && isImage() && isReasonableSize();
+    }
+    
+    // Product listing images & showcase videos
+    match /products/{productId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAuthenticated() && (
+        (isImage() && isReasonableSize()) ||
+        (isVideo() && isReasonableVideoSize())
+      );
+      allow delete: if isAuthenticated();
+    }
+    
+    // Shop logos & storefront banners
+    match /shops/{shopId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAuthenticated() && isImage() && isReasonableSize();
+    }
+
+    // Stores logos & storefront banners
+    match /stores/{storeId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAuthenticated() && isImage() && isReasonableSize();
+    }
+
+    // Chat and order communication attachments
+    match /chat-attachments/{conversationId}/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && isImage() && isReasonableSize();
+    }
+
+    // Private seller verification documents (Trade license, NID, certificates)
+    // NEVER expose publicly - strictly readable by the owner seller or admin
+    match /seller-documents/{userId}/{allPaths=**} {
+      allow read: if isOwner(userId) || isStaffAdmin();
+      allow write: if isOwner(userId) && (
+        request.resource.contentType.matches('application/pdf') ||
+        request.resource.contentType.matches('image/.*')
+      ) && isReasonableSize();
+      allow delete: if isOwner(userId) || isStaffAdmin();
+    }
+
+    // CMS media assets (banners, logos, highlights)
+    match /cms/{allPaths=**} {
+      allow read: if true;
+      allow write: if isStaffAdmin() && (
+        (isImage() && isReasonableSize()) ||
+        (isVideo() && isReasonableVideoSize())
+      );
+      allow delete: if isStaffAdmin();
+    }
+  }
+}

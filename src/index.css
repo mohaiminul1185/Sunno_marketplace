@@ -1,0 +1,255 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-heading: 'Montserrat', sans-serif;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+    html, body {
+    font-family: var(--font-body);
+    background-color: #f3f8f4;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(160, 243, 153, 0.22) 0px, transparent 50%),
+      radial-gradient(at 100% 15%, rgba(27, 109, 36, 0.08) 0px, transparent 50%),
+      linear-gradient(180deg, #f1f8f3 0%, #f8faf6 50%, #f2f7f3 100%);
+    background-attachment: fixed;
+    color: #1b1c1c;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
+  }
+
+
+  /* Ensure typed text in inputs/textareas/selects is always deep black and readable */
+  input, select, textarea {
+    color: #0f172a !important; /* deep slate-950 black */
+    -webkit-text-fill-color: #0f172a;
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: #94a3b8; /* slate-400 clearly distinct from typed text */
+    -webkit-text-fill-color: #94a3b8;
+    opacity: 1;
+  }
+
+  /* Browser autofill text color fix */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:focus {
+    -webkit-text-fill-color: #0f172a !important;
+    caret-color: #0f172a !important;
+  }
+
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  img, video, svg {
+    max-width: 100%;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: var(--font-heading);
+  }
+
+  .font-serif-luxury {
+    font-family: var(--font-display);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+}
+
+/* SUNNO Standard Adaptive Product Grid */
+.sunno-responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .sunno-responsive-grid {
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sunno-responsive-grid {
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+/* Refined Soft Ambient Shadow */
+.ambient-shadow {
+  box-shadow: 0 20px 40px rgba(13, 68, 33, 0.04), 0 4px 12px rgba(0, 0, 0, 0.02);
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+.ambient-shadow:hover {
+  box-shadow: 0 30px 60px rgba(13, 68, 33, 0.08), 0 8px 24px rgba(0, 0, 0, 0.04);
+  transform: translateY(-4px);
+}
+
+.ambient-shadow-lg {
+  box-shadow: 0 16px 48px rgba(13, 68, 33, 0.12);
+}
+
+/* Custom Masonry/Bento styling for grid items */
+.bento-card img {
+  transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.bento-card:hover img {
+  transform: scale(1.05);
+}
+.bento-card .bento-content {
+  transform: translateY(10px);
+  opacity: 0.9;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease;
+}
+.bento-card:hover .bento-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.glass-panel {
+  background: rgba(251, 249, 248, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-shimmer {
+  background: linear-gradient(90deg, #002c11 0%, #0d4421 50%, #002c11 100%);
+  background-size: 200% 100%;
+}
+.btn-shimmer:hover {
+  animation: shimmer 2s infinite linear;
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #c1c9be;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #717970;
+}
+
+/* Hide scrollbar completely on elements with .no-scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+.no-scrollbar {
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
+}
+
+/* ==========================================================================
+   SUNNO DIGITAL RECEIPT PRINT STYLES
+   ========================================================================== */
+@media screen {
+  #sunno-print-container {
+    display: none !important;
+  }
+}
+
+@media print {
+  /* Hide all top-level application elements except the dedicated print container */
+  body > *:not(#sunno-print-container) {
+    display: none !important;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #111827 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    min-height: 100% !important;
+    overflow: visible !important;
+  }
+
+  #sunno-print-container {
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 10mm !important;
+    background: #ffffff !important;
+    box-sizing: border-box !important;
+    z-index: 2147483647 !important;
+    visibility: visible !important;
+  }
+
+  #sunno-print-container * {
+    visibility: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+}
+
+/* Reduced Motion Support for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Responsive Table Wrapper helper */
+.responsive-table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
