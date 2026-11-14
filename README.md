@@ -1,4 +1,4 @@
-# SUNNO (শূন্য) — Bangladesh's First Hyperlocal & Sustainable Artisanal Marketplace
+# SUNNO — Bangladesh's First Hyperlocal & Sustainable Artisanal Marketplace
 
 [![Version](https://img.shields.io/badge/version-2.6.0-green.svg)](https://sunno.app)
 [![License](https://img.shields.io/badge/license-Proprietary-blue.svg)](LICENSE)
